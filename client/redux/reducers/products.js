@@ -6,7 +6,9 @@ const initialState = {
     //   price: 10
     // }
   },
-  rates: {},
+  rates: {
+    USD: 1
+  },
   currency: 'USD',
   sort: {
     type: 'price',
@@ -59,14 +61,17 @@ object = {
   'hi': { id: 'hi', title: 'Marina' }
 }
 */
+
+const arrayToObject = (arr) => {
+  return arr.reduce((acc, product) => ({ ...acc, [product.id]: product }), {})
+}
+
 export function getProductsFromServer() {
   return (dispatch) => {
     fetch('/api/v1/goods')
       .then((response) => response.json())
       .then((result) => {
-        const newObj = result.reduce((acc, product) => {
-          return {...acc, [product.id]: product}
-        }, {})
+        const newObj = arrayToObject(result)
         dispatch({ type: GET_PRODUCTS, listOfGoods: newObj })
       })
   }
@@ -91,13 +96,32 @@ export function sortProducts(sortType = 'price', sortDirection = 'a-z') {
     fetch(`/api/v1/goods/${sortType}/${sortDirection}`)
       .then((response) => response.json())
       .then((result) => {
-        dispatch({ type: GET_PRODUCTS, listOfGoods: result })
+        const newObj = arrayToObject(result)
+        dispatch({ type: GET_PRODUCTS, listOfGoods: newObj })
       })
     dispatch({
       type: SET_SORT_TYPE,
       sortType,
       sortDirection
     })
+
+    // const sortedBasket = Object.values(basket).sort((a, b) => {
+    //   if (type === 'price' && direction === 'a-z') {
+    //     return a.price - b.price
+    //   }
+    //   if (type === 'price' && direction === 'z-a') {
+    //     return b.price - a.price
+    //   }
+    //   if (type === 'title' && direction === 'a-z') {
+    //     return a.title.localeCompare(b.title)
+    //   }
+    //   if (type === 'title' && direction === 'z-a') {
+    //     return b.title.localeCompare(a.title)
+    //   }
+    //   return a.price - b.price
+    // })
+
+
   }
 }
 
