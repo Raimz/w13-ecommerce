@@ -55,7 +55,7 @@ server.get('/api/v1/goods/:type/:direction', async (req, res) => {
   const sorted = data.sort((a, b) => {
     if (type === 'price' && direction === 'a-z') {
       return a.price - b.price
-    } 
+    }
     if (type === 'price' && direction === 'z-a') {
       return b.price - a.price
     }
@@ -69,7 +69,7 @@ server.get('/api/v1/goods/:type/:direction', async (req, res) => {
   })
   const result = sorted.filter((it, index) => index < 30)
   res.json(result)
-}) 
+})
 
 server.get('/api/v1/rates', async (req, res) => {
   const rate = await axios

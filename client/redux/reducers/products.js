@@ -1,6 +1,14 @@
 const initialState = {
-  goods: [],
-  rates: {},
+  goods: {
+    // 'id': {
+    //   id: '384u9014',
+    //   title: 'Beer',
+    //   price: 10
+    // }
+  },
+  rates: {
+    USD: 1
+  },
   currency: 'USD',
   sort: {
     type: 'price',
@@ -46,13 +54,25 @@ export default (state = initialState, action) => {
       return state
   }
 }
+/*
+array = [{ id: 10, title: 'Pepe' }, { id: 'hi', title: 'Marina' }]
+object = { 
+  '10': { id: 10, title: 'Pepe' },
+  'hi': { id: 'hi', title: 'Marina' }
+}
+*/
+
+const arrayToObject = (arr) => {
+  return arr.reduce((acc, product) => ({ ...acc, [product.id]: product }), {})
+}
 
 export function getProductsFromServer() {
   return (dispatch) => {
     fetch('/api/v1/goods')
       .then((response) => response.json())
       .then((result) => {
-        dispatch({ type: GET_PRODUCTS, listOfGoods: result })
+        const newObj = arrayToObject(result)
+        dispatch({ type: GET_PRODUCTS, listOfGoods: newObj })
       })
   }
 }
@@ -76,12 +96,53 @@ export function sortProducts(sortType = 'price', sortDirection = 'a-z') {
     fetch(`/api/v1/goods/${sortType}/${sortDirection}`)
       .then((response) => response.json())
       .then((result) => {
-        dispatch({ type: GET_PRODUCTS, listOfGoods: result })
+        const newObj = arrayToObject(result)
+        dispatch({ type: GET_PRODUCTS, listOfGoods: newObj })
       })
     dispatch({
       type: SET_SORT_TYPE,
       sortType,
       sortDirection
     })
+
+    // const sortedBasket = Object.values(basket).sort((a, b) => {
+    //   if (type === 'price' && direction === 'a-z') {
+    //     return a.price - b.price
+    //   }
+    //   if (type === 'price' && direction === 'z-a') {
+    //     return b.price - a.price
+    //   }
+    //   if (type === 'title' && direction === 'a-z') {
+    //     return a.title.localeCompare(b.title)
+    //   }
+    //   if (type === 'title' && direction === 'z-a') {
+    //     return b.title.localeCompare(a.title)
+    //   }
+    //   return a.price - b.price
+    // })
+
+
   }
 }
+
+/*
+export function getProductsFromServerToMap() {
+  return (dispatch) => {
+    fetch('/api/v1/goods')
+      .then((response) => response.json())
+      .then((result) => {
+        let mapOfProducts = new Map() //Объявляем переменную с типом данных Map
+        result.forEach((product) => { // Т.к у Map есть Геттеры и Сеттеры, лучше использовать forEach
+          if(!mapOfProducts.has(product.id)){ // Проверка есть ли наш ID в Мапе
+            mapOfProducts.set(product.id, product) // Если нет, то добавляем с помощью Сет новый объект с ключем product id, value - {} product изначальный
+          }
+        }
+        dispatch({ type: GET_PRODUCTS, listOfGoods: mapOfProducts })
+      })
+  }
+}
+
+export function removeProductsMap() {
+
+}
+*/
