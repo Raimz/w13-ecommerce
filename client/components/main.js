@@ -14,15 +14,25 @@ const Main = () => {
     dispatch(getProductsFromServer())
     dispatch(addRates())
   }, [])
-
+/*
+array = [{ id: 10, title: 'Pepe' }, { id: 'hi', title: 'Marina' }]
+object = { 
+  '10': { id: 10, title: 'Pepe' },
+  'hi': { id: 'hi', title: 'Marina' }
+}
+[
+  ['10', { id: 10, title: 'Pepe' }],
+  ['hi', { id: 'hi', title: 'Marina' }]
+]
+*/
   return (
     <div className="h-full">
       <Head title="Hello" />
       <Header />
       <div className="flex flex-wrap h-screen">
-        {listOfGoods.map((good) => {
-          return (<div key={good.id}>
-            <Product good={good} />
+        {Object.entries(listOfGoods).map((good) => {
+          return (<div key={good[0]}>
+            <Product good={good[1]} />
           </div>)
         })}
       </div>
