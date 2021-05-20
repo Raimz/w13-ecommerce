@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { removeFromBasket } from '../redux/reducers/basket'
+import { removeFromBasket, addToBasket } from '../redux/reducers/basket'
 
 const BasketProduct = ({ item }) => {
   const dispatch = useDispatch()
@@ -17,6 +17,7 @@ const BasketProduct = ({ item }) => {
       <div className="product__price">{price.toFixed(2)} {currency}</div>
       <div className="product__amount">x {product.amount}</div>
       <button className="product__remove p-2 border" type="button" onClick={() => dispatch(removeFromBasket(item.id))}> - </button>
+      <button className="product__add p-2 border" type="button" onClick={() => dispatch(addToBasket(item.id))}> + </button>
       <div>{(price * product.amount).toFixed(2)} {currency}</div>
     </div>
   )

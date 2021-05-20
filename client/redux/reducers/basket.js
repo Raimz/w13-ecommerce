@@ -1,4 +1,4 @@
- const initialState = {
+const initialState = {
   basketProducts: {
     /* 'someId': {
       id: test,
@@ -28,14 +28,17 @@ export default (state = initialState, action) => {
 }
 
 function calculateTotal(basket) {
-  const total = Object.entries(basket).reduce((acc, goodArr) => {
-    const amount = acc.amount + goodArr[1].amount
-    const price = acc.price + basket?.[goodArr[0]].price * basket?.[goodArr[0]].amount
-    return { amount, price }
-  }, {
-    amount: 0,
-    price: 0
-  })
+  const total = Object.entries(basket).reduce(
+    (acc, goodArr) => {
+      const amount = acc.amount + goodArr[1].amount
+      const price = acc.price + basket?.[goodArr[0]].price * basket?.[goodArr[0]].amount
+      return { amount, price }
+    },
+    {
+      amount: 0,
+      price: 0
+    }
+  )
   return total
 }
 
@@ -44,9 +47,10 @@ export function addToBasket(itemId) {
     const store = getState()
     const basket = store.basket.basketProducts
     const products = store.products.goods
-    const updatedBasket = typeof basket?.[itemId] === 'undefined'
-      ? { ...basket, [itemId]: { ...products[itemId], amount: 1 } }
-      : { ...basket, [itemId]: { ...basket[itemId], amount: basket[itemId].amount + 1 } }
+    const updatedBasket =
+      typeof basket?.[itemId] === 'undefined'
+        ? { ...basket, [itemId]: { ...products[itemId], amount: 1 } }
+        : { ...basket, [itemId]: { ...basket[itemId], amount: basket[itemId].amount + 1 } }
     const total = calculateTotal(updatedBasket)
     dispatch({
       type: CHANGE_PRODUCTS,
@@ -63,8 +67,7 @@ export function removeFromBasket(itemId) {
     const basket = store.basket.basketProducts
     const updatedBasket = {
       ...basket,
-      [itemId]: { ...basket[itemId],
-      amount: basket[itemId].amount - 1 }
+      [itemId]: { ...basket[itemId], amount: basket[itemId].amount - 1 }
     }
     if (updatedBasket[itemId].amount <= 0) {
       delete updatedBasket[itemId]
@@ -90,7 +93,7 @@ export function changeBasketMap(itemId, sign) {
       ? basket.set(itemId, 1)
       : basket.set(itemId, basket.get(itemId) + 1)
     }else{
-      basket.get(itemId) <= 1 
+      basket.get(itemId) <= 1
       ? basket.delete(itemId)
       : basket.set(itemId, basket.get(itemId) - 1)
     }

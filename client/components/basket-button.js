@@ -33,5 +33,3 @@ const BasketButton = () => {
 BasketButton.propTypes = {}
 
 export default React.memo(BasketButton)
-
-

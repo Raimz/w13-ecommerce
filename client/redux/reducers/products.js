@@ -56,7 +56,7 @@ export default (state = initialState, action) => {
 }
 /*
 array = [{ id: 10, title: 'Pepe' }, { id: 'hi', title: 'Marina' }]
-object = { 
+object = {
   '10': { id: 10, title: 'Pepe' },
   'hi': { id: 'hi', title: 'Marina' }
 }
@@ -104,27 +104,24 @@ export function sortProducts(sortType = 'price', sortDirection = 'a-z') {
       sortType,
       sortDirection
     })
-
-    // const sortedBasket = Object.values(basket).sort((a, b) => {
-    //   if (type === 'price' && direction === 'a-z') {
-    //     return a.price - b.price
-    //   }
-    //   if (type === 'price' && direction === 'z-a') {
-    //     return b.price - a.price
-    //   }
-    //   if (type === 'title' && direction === 'a-z') {
-    //     return a.title.localeCompare(b.title)
-    //   }
-    //   if (type === 'title' && direction === 'z-a') {
-    //     return b.title.localeCompare(a.title)
-    //   }
-    //   return a.price - b.price
-    // })
-
-
   }
 }
 
+// const sortedBasket = Object.values(basket).sort((a, b) => {
+//   if (type === 'price' && direction === 'a-z') {
+//     return a.price - b.price
+//   }
+//   if (type === 'price' && direction === 'z-a') {
+//     return b.price - a.price
+//   }
+//   if (type === 'title' && direction === 'a-z') {
+//     return a.title.localeCompare(b.title)
+//   }
+//   if (type === 'title' && direction === 'z-a') {
+//     return b.title.localeCompare(a.title)
+//   }
+//   return a.price - b.price
+// })
 /*
 export function getProductsFromServerToMap() {
   return (dispatch) => {

@@ -42,4 +42,4 @@ const SortingButtons = () => {
 
 SortingButtons.propTypes = {}
 
-export default React.memo(SortingButtons) 
+export default React.memo(SortingButtons)
