@@ -9,6 +9,7 @@ import Basket from '../components/basket'
 import DummyView from '../components/dummy-view'
 import NotFound from '../components/404'
 import Main from '../components/main'
+import Logs from '../components/log'
 
 import Startup from './startup'
 
@@ -51,6 +52,7 @@ const RootComponent = (props) => {
           <Switch>
             <Route exact path="/" component={Main} />
             <Route exact path="/basket" component={Basket} />
+            <Route exact path="/logs" component={Logs} />
             <PrivateRoute exact path="/hidden-route" component={DummyView} />
             <OnlyAnonymousRoute exact path="/anonymous-route" component={DummyView} />
             <Route component={NotFound} />

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import CurrencyButtons from './currency-buttons'
 import SortingButtons from './sorting-buttons'
 import BasketButton from './basket-button'
+import LogButton from './log-button'
 
 const Header = () => {
   return (
@@ -19,6 +20,7 @@ const Header = () => {
         <CurrencyButtons />
         <SortingButtons />
         <BasketButton />
+        <LogButton />
       </div>
     </nav>
   )

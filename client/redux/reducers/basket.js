@@ -1,3 +1,5 @@
+import { LOG_ADD_PRODUCTS, LOG_REMOVE_PRODUCTS } from '../middleware/logs'
+
 const initialState = {
   basketProducts: {
     /* 'someId': {
@@ -58,6 +60,12 @@ export function addToBasket(itemId) {
       totalAmount: total.amount,
       totalPrice: total.price
     })
+    dispatch({
+      type: LOG_ADD_PRODUCTS,
+      payload: {
+        itemTitle: basket?.[itemId].title
+      }
+    })
   }
 }
 
@@ -65,11 +73,20 @@ export function removeFromBasket(itemId) {
   return (dispatch, getState) => {
     const store = getState()
     const basket = store.basket.basketProducts
+    if (typeof basket?.[itemId] === 'undefined') {
+      return
+    }
     const updatedBasket = {
       ...basket,
       [itemId]: { ...basket[itemId], amount: basket[itemId].amount - 1 }
     }
-    if (updatedBasket[itemId].amount <= 0) {
+    if (updatedBasket?.[itemId].amount <= 0) {
+      dispatch({
+        type: LOG_REMOVE_PRODUCTS,
+        payload: {
+          itemTitle: updatedBasket[itemId].title
+        }
+      })
       delete updatedBasket[itemId]
     }
     const total = calculateTotal(updatedBasket)
