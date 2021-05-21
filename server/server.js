@@ -73,7 +73,7 @@ server.get('/api/v1/goods/:type/:direction', async (req, res) => {
 
 server.get('/api/v1/rates', async (req, res) => {
   const rate = await axios
-    .get('https://api.ratesapi.io/api/latest?base=USD&symbols=EUR,CAD,USD')
+    .get('https://api.exchangerate.host/latest?base=USD&symbols=USD,EUR,CAD')
     .then(({ data }) => data.rates)
   res.json(rate)
 })
